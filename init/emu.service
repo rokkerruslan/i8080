@@ -1,0 +1,12 @@
+[Unit]
+Description=i8080
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5s
+ExecStart=/app/current/dist/emu
+EnvironmentFile=/app/current/dist/env
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,6 @@
+[emu]
+138.68.124.190
+
+[emu:vars]
+ansible_python_interpreter=/usr/bin/python3
+

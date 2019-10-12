@@ -1,0 +1,36 @@
+
+.debugCurrentLine {
+    background-color: #ffcb00;
+}
+
+.activeBreakpoint::before {
+    background-color: #ffcb00;
+    border-radius: 50%;
+    box-shadow: 0 0 4px #ffcb00;
+    content: '';
+    display: inline-block;
+    height: 70%;
+    margin-left: 4px;
+    margin-top: 4px;
+    width: 70%;
+}
+
+.potentialBreakpoint::before {
+    background-color: #ffcb00;
+    border-radius: 50%;
+    box-shadow: 0 0 4px #ffcb00;
+    content: '';
+    display: inline-block;
+    height: 70%;
+    margin-left: 4px;
+    margin-top: 4px;
+    width: 70%;
+}
+
+.error {
+    background-color: #ff3406;
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: bold;
+    font-style: oblique;
+}

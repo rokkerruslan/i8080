@@ -1,0 +1,14 @@
+
+# Directories for building backend and frontend. Yarn collect
+# static to this directory Go build output directory.
+/dist*
+
+# Yarn local packages
+/web/node_modules/
+
+# Jest coverage statistic
+/web/coverage/
+
+# Application configuration
+/.env.local
+/.env.production

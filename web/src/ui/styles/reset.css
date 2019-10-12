@@ -1,0 +1,26 @@
+html {
+    height: 100%;
+    width: 100%;
+}
+
+main {
+    font-family: 'Share Tech Mono', monospace;
+}
+
+* {
+    background: none;
+    border: none;
+    box-sizing: border-box;
+    margin: 0;
+    outline: none;
+    padding: 0;
+}
+
+/* Other */
+textarea {
+    outline: none;
+}
+
+input {
+    min-width: 0;
+}

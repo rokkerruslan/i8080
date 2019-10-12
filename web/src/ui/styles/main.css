@@ -1,0 +1,18 @@
+@import "reset.css";
+@import "lib.css";
+@import "editor.css";
+
+body {
+    height: 100%;
+    overflow-y: scroll;
+    user-select: none;
+    width: 100%;
+}
+
+::selection {
+    background: #e5e5e5;
+}
+
+input {
+    font-family: "Share Tech Mono", monospace;
+}
