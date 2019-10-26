@@ -20,7 +20,7 @@
                        :format="format"
                        :readonly="readonly"
                        :bits="8"
-                       :ascii="true"
+                       :ascii="isAscii"
                        :zero="true"
                        v-for="index in indexes"></fmt-input>
         </section>
@@ -67,6 +67,10 @@
 
         address(index: number) {
             return ifmt(index, Format.Hex, 4)
+        }
+
+        get isAscii() {
+            return this.format == Format.Ascii
         }
     }
 </script>
