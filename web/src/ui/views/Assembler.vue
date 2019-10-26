@@ -207,7 +207,7 @@
                 {disabled: !this.isRunning,                           click: () => this.emu.stop(),                   name: "Stop", title: "Stop Execution"},
                 {disabled: !this.isStopped || this.isErrorOnRegister, click: () => this.emu.continue(this.frequency), name: "Cont", title: "Continue Execution"},
                 {disabled: true,                                      click: () => {},                                name: "Back", title: "Backward Debugger In Dev"},
-                {disabled: !this.isStopped,                           click: () => this.emu.reset(),                  name: "RST",  title: "Reset Emulation"},
+                {disabled: !this.isStopped && !this.isHalted,         click: () => this.emu.reset(),                  name: "RST",  title: "Reset Emulation"},
             ]
         }
 
@@ -251,7 +251,7 @@
             return this.emu.state === State.Halted
         }
 
-        get isStopped() {
+        get isStopped(): boolean {
             return this.emu.state === State.Stopped
         }
 
