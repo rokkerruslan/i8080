@@ -15,13 +15,14 @@
 
         <section class="memory-unit">
             <fmt-input :key="index"
-                       :title="address(index)"
+                       :title="pc === index ? `Program Counter Set On ${address(index)}` : address(index)"
                        v-model="memory[index]"
                        :format="format"
                        :readonly="readonly"
                        :bits="8"
                        :ascii="isAscii"
                        :zero="true"
+                       :active="pc === index"
                        v-for="index in indexes"></fmt-input>
         </section>
     </div>
@@ -45,6 +46,9 @@
 
         @Prop()
         public memory!: Array<number>
+
+        @Prop()
+        public pc!: number
 
         formatButtons = [
             {text: "Hex", value: Format.Hex},

@@ -1,10 +1,10 @@
 <template>
-    <label :data-tooltip-text="errText" :class="{ tooltip : err }" :title="title">
+    <label :data-tooltip-text="errText" :class="{ tooltip : err, active: active }" :title="title">
         <span v-if="label" v-text="label"></span>
 
         <input :readonly="readonly"
                :value="formatted"
-               :class="{ zero: zero && value === 0 }"
+               :class="{ zero: zero && value === 0, active: active }"
                @keypress.enter="enter"
                @blur="blur"
                @mousedown="md"
@@ -51,6 +51,9 @@
 
         @Prop()
         zero!: boolean
+
+        @Prop()
+        active!: boolean
 
         private err = false
 
@@ -162,5 +165,12 @@
 
     .zero:hover {
         color: white
+    }
+
+    label.active {
+        background-color: #ffd50a;
+    }
+    input.active {
+        color: #ffffff;
     }
 </style>

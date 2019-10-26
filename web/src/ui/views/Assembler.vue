@@ -16,7 +16,7 @@
             </section>
 
             <section v-show="isMemory">
-                <memory :memory="emu.memory" :readonly="this.isRunning"></memory>
+                <memory :memory="emu.memory" :readonly="this.isRunning" :pc="emu.pc"></memory>
             </section>
 
             <section v-show="isAdditional">
