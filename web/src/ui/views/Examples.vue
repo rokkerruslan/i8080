@@ -3,12 +3,11 @@
         <div class="search">
             <input class="input"
                    placeholder="Example source code of the I8080 programs" type="text"
-                   v-model="query"
-                   v-on:input="filterProgram">
+                   v-model="query">
         </div>
 
         <transition-group name="flip-list" tag="ul">
-            <li v-for="p in programs" :key="p.description">
+            <li v-for="p in filterProgram" :key="p.description">
                 <h2>{{ p.name }}</h2>
 
                 <p class="description">{{ p.description }}</p>
@@ -42,7 +41,13 @@
             this.$router.push({name: "assembler"})
         }
 
-        filterProgram() {
+        get filterProgram(): Array<example> {
+            if (this.query === "") return this.programs
+
+            const query = this.query.toLowerCase()
+            return this.programs.filter((e: example) => {
+                return (e.text + e.description).toLowerCase().indexOf(query) != -1
+            })
         }
     }
 </script>
