@@ -8,8 +8,8 @@ Try it online available on this page.
 
 Application (include emulator, assembler and debugger)
 can work without any server or database service. Just
-download source code, and run script. (you need node
-and yarn to running js code and download dependencies)
+download source code, and run script. You need node
+and yarn to download dependencies and run application.
 
 ```bash
 $ git clone https//github.com/rokkerruslan/i8080 && cd i8080
@@ -38,6 +38,7 @@ todo: link on references
 - expressions evaluation
 - collections page
 - reverse debugger (step backward)
+- i/o support
 
 ## Tests
 
