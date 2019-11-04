@@ -8,14 +8,12 @@
         </div>
 
         <transition-group name="flip-list" tag="ul">
-            <li v-for="p in programs" :key="p.Name">
-                <p class="author" title="Author">{{ p.Author }}</p>
+            <li v-for="p in programs" :key="p.description">
+                <h2>{{ p.name }}</h2>
 
-                <p class="description">{{ p.Description }}</p>
+                <p class="description">{{ p.description }}</p>
 
-                <p title="Lines of Code">LOC: {{ p.Loc }}</p>
-
-                <button @click="run(p.Text)" class="btn" title="Run the program on emulator">Run</button>
+                <button @click="run(p.text)" class="btn" title="Run the program on emulator">Run</button>
             </li>
         </transition-group>
     </main>
@@ -23,10 +21,14 @@
 
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator"
+    import {example} from "@/examples"
+    import {memset} from "@/examples/memset"
 
     @Component
     export default class ExamplesView extends Vue {
-        programs = []
+        programs: Array<example> = [
+            memset,
+        ]
 
         query: string = ""
 
@@ -100,14 +102,11 @@
         box-shadow: 0 0 8px #464646;
     }
 
-    .author {
-        text-shadow: -3px 0 3px #dadada,
-        3px 0 3px #dadada,
-        6px 0 6px #dadada,
-        -6px 0 6px #dadada;
-    }
-
     .description {
         margin-bottom: 1em;
+    }
+
+    h2 {
+        margin-bottom: .5em;
     }
 </style>

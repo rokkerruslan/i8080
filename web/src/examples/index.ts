@@ -1,5 +1,11 @@
 
-export {introduction, tutorial}
+export {introduction, tutorial, example}
+
+interface example {
+    text: string
+    name: string
+    description: string
+}
 
 // introduction example (at first assembler page loading)
 let introduction = `
