@@ -85,9 +85,29 @@
                 <hr>
 
                 <div class="flag-register-block" title="Flag Register Block">
-                    <label v-for="flag of flagRegisterBlock" :key="flag.name" :title="flag.title" class="checkbox">
-                        <input type="checkbox" v-model="flag.model">
-                        <span v-text="flag.name"></span>
+                    <label title="sign flag" class="checkbox">
+                        <input type="checkbox" v-model="emu.flagS">
+                        <span>S</span>
+                    </label>
+
+                    <label title="set if the result is zero" class="checkbox">
+                        <input type="checkbox" v-model="emu.flagZ">
+                        <span>Z</span>
+                    </label>
+
+                    <label title="cused for binary-coded decimal arithmetic" class="checkbox">
+                        <input type="checkbox" v-model="emu.flagAC">
+                        <span>AC</span>
+                    </label>
+
+                    <label title="set if the number of 1 bits in the result is even" class="checkbox">
+                        <input type="checkbox" v-model="emu.flagP">
+                        <span>P</span>
+                    </label>
+
+                    <label title="carry flag" class="checkbox">
+                        <input type="checkbox" v-model="emu.flagCY">
+                        <span>CY</span>
                     </label>
                 </div>
 
@@ -207,16 +227,6 @@
                 {disabled: !this.isStopped || this.isErrorOnRegister, click: () => this.emu.continue(this.frequency), name: "Cont", title: "Continue Execution"},
                 {disabled: true,                                      click: () => {},                                name: "Back", title: "Backward Debugger In Dev"},
                 {disabled: !this.isStopped && !this.isHalted,         click: () => this.emu.reset(),                  name: "RST",  title: "Reset Emulation"},
-            ]
-        }
-
-        get flagRegisterBlock() {
-            return [
-                {model: this.emu.flagS,  name: "S",  title: "sign flag"},
-                {model: this.emu.flagZ,  name: "Z",  title: "set if the result is zero"},
-                {model: this.emu.flagAC, name: "AC", title: "used for binary-coded decimal arithmetic"},
-                {model: this.emu.flagP,  name: "P",  title: "set if the number of 1 bits in the result is even"},
-                {model: this.emu.flagCY, name: "CY", title: "carry flag"},
             ]
         }
 
