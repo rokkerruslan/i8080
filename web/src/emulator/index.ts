@@ -1699,7 +1699,7 @@ export class Emulator {
     //
     // ((SP) - 1) <- (PCH)
     // ((SP) - 2) <- (PCL)
-    //  (SP) <- (SP) -2
+    //  (SP) <- (SP) - 2
     //  (PC) <- (byte3)(byte2)
     //
     // The high-order eight bits of the next instruction address are
@@ -1711,7 +1711,8 @@ export class Emulator {
     // is transferred to the instruction whose address is specified in
     // `byte 3` and `byte 2` of the current instruction.
     call() {
-        this.memory.splice(this.sp - 2, low(this.pc), high(this.pc))
+        const next = this.pc + 3
+        this.memory.splice(this.sp - 2, 2, high(next), low(next))
         this.sp -= 2
         this.pc = to16(this.memory[this.pc + 2], this.memory[this.pc + 1])
         this.cycles += 5

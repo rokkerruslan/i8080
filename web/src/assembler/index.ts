@@ -7,6 +7,7 @@ import {scan, Rule, Rules, Token} from "./scanner"
 import {ast} from "./syntax"
 
 import {Context, db, ds, dw, evaluate} from "./eval"
+import {fix} from "@/assembler/fix";
 
 export {assemble, Executable}
 
@@ -211,7 +212,7 @@ const assemble = (text: string): Executable => {
                 break
 
             case "LXI":
-                construct(l, op | (check(evaluate(ctx, dst), 2, dst) << 4), ...from16(check(evaluate(ctx, src), 16, src)).reverse())
+                construct(l, op | (check(fix(evaluate(ctx, dst)), 2, dst) << 4), ...from16(check(evaluate(ctx, src), 16, src)).reverse())
                 break
 
             case "ADD":
@@ -251,7 +252,7 @@ const assemble = (text: string): Executable => {
             case "DAD":
             case "PUSH":
             case "POP":
-                construct(l, op | check(evaluate(ctx, dst), 2, dst) << 4)
+                construct(l, op | check(fix(evaluate(ctx, dst)), 2, dst) << 4)
                 break
 
             case "LDA":

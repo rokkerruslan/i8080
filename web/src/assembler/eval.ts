@@ -135,8 +135,8 @@ const Resisters = new Dict([
     ["L", 0b101],
     ["M", 0b110],
     ["A", 0b111],
-    ["PSW", 0b11],
-    ["SP", 0b11],
+    ["PSW", 0b111],
+    ["SP", 0b111],
 ])
 
 // todo: support expressions
