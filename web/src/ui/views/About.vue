@@ -16,7 +16,6 @@
             Write me:
 
             Telegram <a href="https://t.me/rokkerruslan">@rokkerruslan</a>
-            Email:   <a href="mailto:rokkerruslan@protonmail.com">rokkerruslan@protonmail.com</a>
             Github:  <a class="user-select: all" href="https://github.com/rokkerruslan/i8080" target="_blank">github.com/rokkerruslan/i8080</a>
         </pre>
     </main>
