@@ -1170,7 +1170,7 @@ export class Emulator {
 
         const index = ((this.a & 0x88) >> 1) | ((this.getr(r) & 0x88) >> 2) | ((result & 0x88) >> 3)
 
-        halfAarryTable[index & 0x7] ? setb(this.flags, Flags.AxCarry) : clrb(this.flags, Flags.AxCarry)
+        halfAarryTable[index & 0x7] ? setb(this.flags, FlagsIndex.AxCarry) : clrb(this.flags, FlagsIndex.AxCarry)
 
         this.flags = upZSPC(this.flags, result, false)
 
@@ -1192,7 +1192,7 @@ export class Emulator {
 
         const index = ((this.a & 0x88) >> 1) | ((this.memhl & 0x88) >> 2) | ((result & 0x88) >> 3)
 
-        halfAarryTable[index & 0x7] ? setb(this.flags, Flags.AxCarry) : clrb(this.flags, Flags.AxCarry)
+        halfAarryTable[index & 0x7] ? setb(this.flags, FlagsIndex.AxCarry) : clrb(this.flags, FlagsIndex.AxCarry)
 
         this.flags = upZSPC(this.flags, result, false)
 
@@ -1213,7 +1213,7 @@ export class Emulator {
 
         const index = ((this.a & 0x88) >> 1) | ((this.getr(r) & 0x88) >> 2) | ((result & 0x88) >> 3)
 
-        !subHalfCarryTable[index & 0x7] ? setb(this.flags, Flags.AxCarry) : clrb(this.flags, Flags.AxCarry)
+        !subHalfCarryTable[index & 0x7] ? setb(this.flags, FlagsIndex.AxCarry) : clrb(this.flags, FlagsIndex.AxCarry)
 
         this.flags = upZSPC(this.flags, result, false)
 
@@ -1234,7 +1234,7 @@ export class Emulator {
         const result = this.memhl - 1
 
         const index = ((this.a & 0x88) >> 1) | ((this.memhl & 0x88) >> 2) | ((result & 0x88) >> 3)
-        !subHalfCarryTable[index & 0x7] ? setb(this.flags, Flags.AxCarry) : clrb(this.flags, Flags.AxCarry)
+        !subHalfCarryTable[index & 0x7] ? setb(this.flags, FlagsIndex.AxCarry) : clrb(this.flags, FlagsIndex.AxCarry)
 
         this.flags = upZSPC(this.flags, result, false)
 
@@ -1281,9 +1281,9 @@ export class Emulator {
         const result = this.hl + this.getrp(rp)
 
         if (result & 0x10000) {
-            setb(this.flags, Flags.Carry)
+            setb(this.flags, FlagsIndex.Carry)
         } else {
-            clrb(this.flags, Flags.Carry)
+            clrb(this.flags, FlagsIndex.Carry)
         }
 
         this.pc += 1
@@ -1522,9 +1522,9 @@ export class Emulator {
     cpi() {
         const result = this.a - this.memory[this.pc + 1]
         if (result === 0) {
-            setb(this.flags, Flags.Zero)
+            setb(this.flags, FlagsIndex.Zero)
         } else if (result < 0) {
-            setb(this.flags, Flags.Carry)
+            setb(this.flags, FlagsIndex.Carry)
         }
         this.pc += 2
         this.cycles += 2
@@ -1540,10 +1540,10 @@ export class Emulator {
         let t = this.a << 1
         if (t & OverBit) {
             setb(t, 0)
-            setb(this.flags, Flags.Carry)
+            setb(this.flags, FlagsIndex.Carry)
         } else {
             clrb(t, 0)
-            clrb(this.flags, Flags.Carry)
+            clrb(this.flags, FlagsIndex.Carry)
         }
         this.a = t
         this.pc += 1
@@ -1560,10 +1560,10 @@ export class Emulator {
         let t = this.a >> 1
         if (t & 1) {
             setb(t, 7)
-            setb(this.flags, Flags.Carry)
+            setb(this.flags, FlagsIndex.Carry)
         } else {
             clrb(t, 0)
-            clrb(this.flags, Flags.Carry)
+            clrb(this.flags, FlagsIndex.Carry)
         }
         this.a = t
         this.pc += 1
@@ -1631,7 +1631,7 @@ export class Emulator {
     //
     // The `C` flag is complemented. No other flags are affected.
     cmc() {
-        xorb(this.flags, Flags.Carry)
+        this.flags = xorb(this.flags, FlagsIndex.Carry)
         this.pc += 1
         this.cycles += 1
     }
@@ -1642,7 +1642,7 @@ export class Emulator {
     //
     // The `C` flag is set to 1. No other flags are affected.
     stc() {
-        setb(this.flags, Flags.Carry)
+        this.flags = setb(this.flags, FlagsIndex.Carry)
         this.pc += 1
         this.cycles += 1
     }
