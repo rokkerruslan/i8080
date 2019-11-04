@@ -273,14 +273,15 @@
                 this.emu.go(this.frequency)
 
             } catch (e) {
+                console.log(e)
+
                 if (e instanceof AssemblerError) {
+                    // this.tmperrors = []
                     this.tmperrors.push(
                         {line: e.line, start: e.start, end: e.end, text: e.message}
                     )
                     return
                 }
-
-                console.log(e)
             }
         }
     }

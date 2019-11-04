@@ -12,6 +12,7 @@ const isString = (s: string): boolean => s.startsWith("'") && s.endsWith("'")
 // Evaluate value of token lexeme
 //
 // todo: tests on big number in evaluation
+// We are not change lexeme here.
 const evaluate = (c: Context, t: Token, defer = false): number => {
     const lexeme = t.lexeme
 
@@ -45,7 +46,7 @@ const evaluate = (c: Context, t: Token, defer = false): number => {
         }
 
         if (defer) {
-            c.unresolved.set(lexeme, c.counter)
+            c.unresolved.set(t, c.counter)
             return 0
         }
     }
@@ -119,8 +120,10 @@ class Context {
     // Resolved labels (label -> address)
     addrs = new Dict<string, number>()
 
-    // Unresolved labels
-    unresolved = new Dict<string, number>()
+    // Unresolved labels, we need the Token type
+    // for generating errors if name will not be
+    // resolved at the end of assembling.
+    unresolved = new Dict<Token, number>()
 }
 
 const Resisters = new Dict([

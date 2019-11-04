@@ -51,10 +51,9 @@
             selectionHighlight: false,
             occurrencesHighlight: false,
             smoothScrolling: true,
-            codeLens: false,
+            codeLens: true,
             contextmenu: false,
             folding: false,
-            disableLayerHinting: true,
             highlightActiveIndentGuide: false,
             minimap: {
                 enabled: false,
@@ -161,8 +160,8 @@
                         range: new Range(i.line + 1, i.start + 1, i.line + 1, i.end + 1),
                         options: {
                             className: "error",
-                            hoverMessage: {value: i.text}
-                        }
+                            hoverMessage: {value: i.text},
+                        },
                     }
                 ])
             }

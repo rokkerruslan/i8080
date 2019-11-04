@@ -103,14 +103,14 @@ const assemble = (text: string): Executable => {
     // todo: refactor to deferred evaluation
     // todo: labels must be tokens in ctx.unresolved, for raising error with context.
     const resolve = () => {
-        for (const [label, base] of ctx.unresolved.entries()) {
-            if (!ctx.addrs.has(label)) throw new Error(`Label ${label} does not exists`)
+        for (const [t, base] of ctx.unresolved.entries()) {
+            if (!ctx.addrs.has(t.lexeme)) throw new AssemblerError(`can not find ${t.lexeme} label`, t)
 
-            console.log("RESOLVE", label, base, ctx.addrs)
+            console.log("RESOLVE", t, base, ctx.addrs)
 
             // Base - opcode address
             // We replace 2 next bytes with real address of label
-            exe.text.splice(base + 1, 2, ...from16(ctx.addrs.get(label)).reverse())
+            exe.text.splice(base + 1, 2, ...from16(ctx.addrs.get(t.lexeme)).reverse())
         }
     }
 
