@@ -992,6 +992,8 @@ export class Emulator {
     _sub(value: number = 1, carry: number = 0) {
         const result = (this.a - value - carry) & 0xffff
 
+        console.log("A:", this.a, "V:", value, "C:", carry, "RE:", result)
+
         const index = ((this.a & 0x88) >> 1) | ((value & 0x88) >> 2) | ((result & 0x88) >> 3)
 
         this.flags = setclrb(this.flags, FlagsIndex.AxCarry, !subHalfCarryTable[index & 0x7])
@@ -1045,7 +1047,7 @@ export class Emulator {
     // bit are added to the content of the accumulator. The
     // result is placed in the accumulator.
     adc(r: number) {
-        this._add(this.getr(r), this.flags & (1 << Flags.Carry))
+        this._add(this.getr(r), this.flagCY ? 1 : 0)
         this.pc += 1
         this.cycles += 1
     }
@@ -1059,7 +1061,7 @@ export class Emulator {
     // content of the `C` flag are added to the accumulator.
     // The result is placed in the accumulator.
     adcm() {
-        this._add(this.memhl, this.flags & (1 << Flags.Carry))
+        this._add(this.memhl, this.flagCY ? 1 : 0)
         this.pc += 1
         this.cycles += 2
     }
@@ -1073,7 +1075,7 @@ export class Emulator {
     // of the accumulator. The result is placed in the
     // accumulator.
     aci() {
-        this._add(this.memory[this.pc + 1], this.flags & (1 << Flags.Carry))
+        this._add(this.memory[this.pc + 1], this.flagCY ? 1 : 0)
         this.pc += 2
         this.cycles += 2
     }
@@ -1125,7 +1127,7 @@ export class Emulator {
     // `C` flag are both substructed from the accumulator.
     // The result is placed in the accumulator.
     sbb(r: number) {
-        this._sub(this.getr(r), this.flags & (1 << Flags.Carry))
+        this._sub(this.getr(r), this.flagCY ? 1 : 0)
         this.pc += 1
         this.cycles += 1
     }
@@ -1139,7 +1141,7 @@ export class Emulator {
     // content of the `C` flag are both substructed from
     // the accumulator. The result is placed in the accumulator.
     sbbm() {
-        this._sub(this.memhl, this.flags & (1 << Flags.Carry))
+        this._sub(this.memhl, this.flagCY ? 1 : 0)
         this.pc += 1
         this.cycles += 1
     }
@@ -1152,7 +1154,7 @@ export class Emulator {
     // the content of the `C` flag are both substructed
     // from accumulator. The result is placed in the accumulator.
     sbi() {
-        this._sub(this.memory[this.pc + 1], this.flags & (1 << Flags.Carry))
+        this._sub(this.memory[this.pc + 1], this.flagCY ? 1 : 0)
         this.pc += 2
         this.cycles += 2
     }

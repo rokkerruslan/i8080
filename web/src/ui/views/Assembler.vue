@@ -124,7 +124,6 @@
     import IO from "../components/assembler/IO.vue"
     import Helper from "../components/assembler/Helper.vue"
     import Docs from "../components/assembler/Docs.vue"
-    import {introduction} from "@/examples";
 
     enum LeftPanel {
         Editor,
@@ -163,7 +162,7 @@
             const localText = localStorage.getItem("source")
 
             if (localText == null || localText.length == 0) {
-                this.text = introduction
+                this.text = ""
             } else {
                 this.text = localText
             }

@@ -24,6 +24,7 @@
     import {intro} from "@/examples/intro"
     import {memset} from "@/examples/memset"
     import {memcopy} from "@/examples/memcopy"
+    import {sub16} from "@/examples/sub16"
 
     @Component
     export default class ExamplesView extends Vue {
@@ -31,6 +32,7 @@
             intro,
             memset,
             memcopy,
+            sub16,
         ]
 
         query: string = ""
