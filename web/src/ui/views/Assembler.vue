@@ -94,7 +94,7 @@
                 <hr>
 
                 <div class="interrupts">
-                    <p>INTERRUPTS</p>
+                    <p style="margin-bottom: .5em">INTERRUPTS</p>
                     <button :disabled="isReseted" @click="emu.int(i - 1)" class="btn" v-for="i in 9">{{ i - 1 }}</button>
                 </div>
 
