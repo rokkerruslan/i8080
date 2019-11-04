@@ -1,4 +1,4 @@
-import {example} from "@/examples/index"
+import {example} from "./index"
 
 export {memset}
 
@@ -13,7 +13,6 @@ let text = `
 ;                   D - HIGH BYTE OF MEMORY SIZE
 ;                   E -  LOW BYTE OF MEMORY SIZE
 ;                   A - VALUE TO FILL
-
 
                 JMP     MAIN
 

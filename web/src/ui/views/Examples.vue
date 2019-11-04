@@ -22,12 +22,16 @@
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator"
     import {example} from "@/examples"
+    import {intro} from "@/examples/intro"
     import {memset} from "@/examples/memset"
+    import {memcopy} from "@/examples/memcopy"
 
     @Component
     export default class ExamplesView extends Vue {
         programs: Array<example> = [
+            intro,
             memset,
+            memcopy,
         ]
 
         query: string = ""

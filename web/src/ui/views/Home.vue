@@ -17,11 +17,11 @@
 
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator"
-    import {introduction} from "@/examples"
+    import {intro} from "@/examples/intro"
 
     @Component
     export default class Home extends Vue {
-        text: string = introduction
+        text: string = intro.text
     }
 </script>
 

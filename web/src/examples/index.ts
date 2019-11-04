@@ -1,30 +1,11 @@
 
-export {introduction, tutorial, example}
+export {example}
 
 interface example {
     text: string
     name: string
     description: string
 }
-
-// introduction example (at first assembler page loading)
-let introduction = `
-            ; Hi, Brave Cats!
-
-            ; It's Intel 8080 Assembler & Emulator
-            ; Program example with loop
-
-            MVI     C,  10h
-
-    LOOP:
-            NOP             ; Process some operations
-
-            DCR     C
-            JNZ     LOOP    ; Jump if C non zero
-
-    END:
-            JMP     END
-`
 
 // Simple source code for assembler introduction
 // runs purpose's. Uses when no internet.
