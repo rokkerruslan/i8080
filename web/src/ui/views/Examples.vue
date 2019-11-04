@@ -24,8 +24,6 @@
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator"
 
-    const host = process.env.VUE_APP_API_EXAMPLES
-
     @Component
     export default class ExamplesView extends Vue {
         programs = []
@@ -39,19 +37,6 @@
         }
 
         filterProgram() {
-            fetch(host + "?query=" + this.query).then(r => {
-                return r.json()
-            }).then(json => {
-                this.programs = json
-            })
-        }
-
-        mounted() {
-            fetch(host).then(r => {
-                return r.json()
-            }).then(json => {
-                this.programs = json
-            })
         }
     }
 </script>

@@ -21,7 +21,6 @@
         "@vue/cli-service": "4.0.5",
         "@vue/test-utils": "1.0.0-beta.29",
         "babel-core": "6.26.3",
-        "compression-webpack-plugin": "^3.0.0",
         "jest": "24.9.0",
         "ts-jest": "24.1.0",
         "typescript": "3.6.4",

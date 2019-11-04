@@ -93,11 +93,9 @@
         // ==== Methods ==================================== //
 
         signUp() {
-            this.auth(process.env.VUE_APP_API_SIGN_UP)
         }
 
         signIn() {
-            this.auth(process.env.VUE_APP_API_SIGN_IN)
         }
 
         auth(url: string) {

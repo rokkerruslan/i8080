@@ -1,8 +1,0 @@
-- hosts: emu
-  gather_facts: no
-  tasks:
-    - name: install emu unit file
-      template: src=../init/emu.service dest=/etc/systemd/system/emu.service
-    - name: reload daemon for complete installing
-      systemd:
-        daemon_reload: yes

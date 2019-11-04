@@ -4,7 +4,7 @@ module.exports = {
     // vue-cli bug
     productionSourceMap: false,
 
-    outputDir: "../dist/web",
+    outputDir: "../dist",
 
     configureWebpack: {
         resolve: {
@@ -14,7 +14,5 @@ module.exports = {
                 "monaco-editor": "monaco-editor/esm/vs/editor/editor.api.js",
             },
         },
-
-        plugins: [new CompressionPlugin()],
     },
 }
