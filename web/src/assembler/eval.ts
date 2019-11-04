@@ -107,23 +107,29 @@ const ds = (c: Context, t: Token) => {
 //
 // Collect information about evaluation.
 class Context {
-
     // Assembler position in binary file
-    counter: number = 0
+    counter: number
 
     // SET and EQU values dictionary. Assembler
     // before start set the predefined register
     // names to values dict, analog of "B:  SET 0",
     // etc instructions as start of source code.
-    values = Resisters
+    values: Dict<string, number>
 
     // Resolved labels (label -> address)
-    addrs = new Dict<string, number>()
+    addrs: Dict<string, number>
 
     // Unresolved labels, we need the Token type
     // for generating errors if name will not be
     // resolved at the end of assembling.
-    unresolved = new Dict<Token, number>()
+    unresolved: Dict<Token, number>
+
+    constructor() {
+        this.counter = 0
+        this.values = Resisters.copy()
+        this.addrs = new Dict<string, number>()
+        this.unresolved = new Dict<Token, number>()
+    }
 }
 
 const Resisters = new Dict([

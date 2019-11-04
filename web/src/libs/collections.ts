@@ -30,9 +30,11 @@ class Stack<T> extends Array<T> {
 class Dict<K, V> {
 
     // Workaround. Map can't be extended in Chrome today :)
-    _map: Map<K, V> = new Map()
+    _map: Map<K, V>
 
     constructor(initial: Iterable<[K, V]> = []) {
+        this._map = new Map<K, V>()
+
         for (const [k, v] of initial) {
             this._map.set(k, v)
         }
@@ -62,6 +64,10 @@ class Dict<K, V> {
 
     entries() {
         return this._map.entries()
+    }
+
+    copy() {
+        return new Dict(this.entries())
     }
 }
 

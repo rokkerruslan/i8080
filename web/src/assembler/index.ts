@@ -187,9 +187,11 @@ const assemble = (text: string): Executable => {
             case "EQU":
                 // todo: see "todo: N1", after that will be "names.map(...)"
                 labels.map((t: Token) => {
-                    if (ctx.values.has(t.lexeme)) throw new AssemblerError(`EQU "${t.lexeme}" symbol can not be redefined`, t)
+                    if (ctx.values.has(t.lexeme)) {
+                        throw new AssemblerError(`EQU "${t.lexeme}" symbol can not be redefined`, t)
+                    }
 
-                    ctx.values.set(t.lexeme, evaluate(ctx, dst))
+                    ctx.values.set(t.lexeme.slice(0, -1), evaluate(ctx, dst))
                 })
                 break
 

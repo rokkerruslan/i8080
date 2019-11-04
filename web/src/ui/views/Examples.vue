@@ -25,6 +25,7 @@
     import {memset} from "@/examples/memset"
     import {memcopy} from "@/examples/memcopy"
     import {sub16} from "@/examples/sub16"
+    import {arraysum} from "@/examples/arraysum"
 
     @Component
     export default class ExamplesView extends Vue {
@@ -33,6 +34,7 @@
             memset,
             memcopy,
             sub16,
+            arraysum,
         ]
 
         query: string = ""
