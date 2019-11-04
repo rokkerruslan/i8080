@@ -1,4 +1,3 @@
-const CompressionPlugin = require("compression-webpack-plugin")
 
 module.exports = {
     // vue-cli bug
