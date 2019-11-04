@@ -2,7 +2,9 @@
     <div>
         Docs
 
+        <hr>
 
+        Read the <a href="https://altairclone.com/downloads/manuals/8080%20Programmers%20Manual.pdf">Intel 8080 Programming Manual</a>
     </div>
 </template>
 
@@ -18,5 +20,9 @@
     ul {
         list-style: none;
         margin-top: 1em;
+    }
+
+    hr {
+        margin: 1em 0;
     }
 </style>
