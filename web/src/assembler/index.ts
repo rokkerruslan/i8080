@@ -132,7 +132,7 @@ const assemble = (text: string): Executable => {
         // todo: create new type of tokens - "names", example usage:
         // todo: for (const {labels, names, mnemonic, ops} of ...) { ... }
         if (mnemonic.lexeme !== "EQU" && mnemonic.lexeme !== "SET") {
-            labels.map((t: Token) => {
+            labels.forEach((t: Token) => {
                 if (ctx.addrs.has(t.lexeme)) throw TypeError(`label ${t} duplicate defined`)
 
                 // slice drop ":" at end of label
