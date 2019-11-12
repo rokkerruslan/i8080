@@ -69,7 +69,7 @@ const assemble = (text: string): Executable => {
     // todo: move to syntax stage
     text += "\n"
 
-    const templateArray: Array<number> = new Array(65536).fill(0);
+    const templateArray: Array<number> = new Array(65536).fill(0)
 
     const ctx = new Context()
 
@@ -88,7 +88,11 @@ const assemble = (text: string): Executable => {
         // we detect if number > 8-bit number, we
         // don't see this error, calling code must
         // send only 8-bit numbers in bytes array.
-        bytes.map(u => { if (u > 255) throw new AssemblerError(`INTERNAL ERROR ${u} too big for 8-bit number`, {rule: Rule.Id, lexeme: "", line: line, start: 0, end: 1}) })
+        bytes.map(u => { 
+            if (u > 255) {
+                throw new AssemblerError(`INTERNAL ERROR ${u} too big for 8-bit number`, {rule: Rule.Id, lexeme: "", line: line, start: 0, end: 1}) 
+            }
+        })
 
         exe.text.splice(ctx.counter, bytes.length, ...bytes)
 
