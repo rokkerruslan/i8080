@@ -88,7 +88,7 @@ const assemble = (text: string): Executable => {
         // we detect if number > 8-bit number, we
         // don't see this error, calling code must
         // send only 8-bit numbers in bytes array.
-        bytes.map(u => { 
+        bytes.forEach(u => { 
             if (u > 255) {
                 throw new AssemblerError(`INTERNAL ERROR ${u} too big for 8-bit number`, {rule: Rule.Id, lexeme: "", line: line, start: 0, end: 1}) 
             }
