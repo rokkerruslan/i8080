@@ -69,9 +69,9 @@ const assemble = (text: string): Executable => {
     // todo: move to syntax stage
     text += "\n"
 
-    let ctx = new Context()
+    const ctx = new Context()
 
-    let exe: Executable = {
+    const exe: Executable = {
         text: Array.from({length: 65536}, () => 0),
         debug: Array.from({length: 65536}, () => 0),
     }
