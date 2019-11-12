@@ -69,11 +69,13 @@ const assemble = (text: string): Executable => {
     // todo: move to syntax stage
     text += "\n"
 
+    const templateArray = new Array(65536).fill(0);
+
     const ctx = new Context()
 
     const exe: Executable = {
-        text: Array.from({length: 65536}, () => 0),
-        debug: Array.from({length: 65536}, () => 0),
+        text: [...templateArray],
+        debug: [...templateArray],
     }
 
     // Insert bytes to resulting binary value
