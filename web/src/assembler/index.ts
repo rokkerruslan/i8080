@@ -69,7 +69,7 @@ const assemble = (text: string): Executable => {
     // todo: move to syntax stage
     text += "\n"
 
-    const templateArray = new Array(65536).fill(0);
+    const templateArray: Array<number> = new Array(65536).fill(0);
 
     const ctx = new Context()
 
