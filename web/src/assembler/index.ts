@@ -69,11 +69,13 @@ const assemble = (text: string): Executable => {
     // todo: move to syntax stage
     text += "\n"
 
-    let ctx = new Context()
+    const templateArray: Array<number> = new Array(65536).fill(0)
 
-    let exe: Executable = {
-        text: Array.from({length: 65536}, () => 0),
-        debug: Array.from({length: 65536}, () => 0),
+    const ctx = new Context()
+
+    const exe: Executable = {
+        text: [...templateArray],
+        debug: [...templateArray],
     }
 
     // Insert bytes to resulting binary value
@@ -86,7 +88,11 @@ const assemble = (text: string): Executable => {
         // we detect if number > 8-bit number, we
         // don't see this error, calling code must
         // send only 8-bit numbers in bytes array.
-        bytes.map(u => { if (u > 255) throw new AssemblerError(`INTERNAL ERROR ${u} too big for 8-bit number`, {rule: Rule.Id, lexeme: "", line: line, start: 0, end: 1}) })
+        bytes.forEach(u => { 
+            if (u > 255) {
+                throw new AssemblerError(`INTERNAL ERROR ${u} too big for 8-bit number`, {rule: Rule.Id, lexeme: "", line: line, start: 0, end: 1}) 
+            }
+        })
 
         exe.text.splice(ctx.counter, bytes.length, ...bytes)
 
@@ -126,7 +132,7 @@ const assemble = (text: string): Executable => {
         // todo: create new type of tokens - "names", example usage:
         // todo: for (const {labels, names, mnemonic, ops} of ...) { ... }
         if (mnemonic.lexeme !== "EQU" && mnemonic.lexeme !== "SET") {
-            labels.map((t: Token) => {
+            labels.forEach((t: Token) => {
                 if (ctx.addrs.has(t.lexeme)) throw TypeError(`label ${t} duplicate defined`)
 
                 // slice drop ":" at end of label

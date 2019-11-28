@@ -160,7 +160,7 @@ describe("assembler errors", () => {
             LOL:    EQU 20
         `
 
-        expect(() => assemble(text)).toThrowError(/LOL:/)
+        expect(assemble.bind(null, text)).not.toThrow()
     })
 
     test("redefine SET with EQU it's a error", () => {

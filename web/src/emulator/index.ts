@@ -348,8 +348,6 @@ export class Emulator {
             case 0x6d:              // mov l, l
             case 0x6f:              // mov l, a
 
-            // ==== BLOCK "MOV M, RRR" BELOW =============== //
-
             case 0x78:              // mov a, b
             case 0x79:              // mov a, c
             case 0x7a:              // mov a, d
@@ -359,6 +357,8 @@ export class Emulator {
             case 0x7f:              // mov a, a
                 this.movr(d(inst), s(inst))
                 break
+
+            // ==== BLOCK "MOV M, RRR" BELOW =============== //
 
             case 0x46:              // mov b, m
             case 0x4e:              // mov c, m
