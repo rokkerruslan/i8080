@@ -17,6 +17,7 @@
 
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator"
+
     import {intro} from "@/examples/intro"
 
     @Component

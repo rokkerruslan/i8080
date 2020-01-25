@@ -133,6 +133,8 @@
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator"
 
+    import {intro} from "@/examples/intro"
+
     import {assemble} from "@/assembler"
     import {AssemblerError} from "@/assembler/errors"
     import {Format} from "@/libs/strings"
@@ -182,7 +184,7 @@
             const localText = localStorage.getItem("source")
 
             if (localText == null || localText.length == 0) {
-                this.text = ""
+                this.text = intro.text
             } else {
                 this.text = localText
             }
