@@ -898,7 +898,7 @@ export class Emulator {
     // the succeeding address is moved to register `H`.
     lhld() {
         const addr = to16(this.memory[this.pc + 2], this.memory[this.pc + 1])
-        this.setrp(RegisterPair.H, this.memory[addr], this.memory[addr + 1])
+        this.setrp(RegisterPair.H, this.memory[addr + 1], this.memory[addr])
         this.pc += 3
         this.cycles += 5
     }
