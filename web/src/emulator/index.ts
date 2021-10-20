@@ -8,6 +8,7 @@ import {clrb, from16, high, low, setb, setclrb, to16, to8, xorb} from "@/libs/bi
 
 import {d, r, s, upZSPC} from "./shortcuts"
 import {conditions, Flags, FlagsIndex, halfAarryTable, subHalfCarryTable} from "./tables"
+import {Register, RegisterPair} from './register_types'
 
 class CpuError extends Error {}
 
@@ -205,51 +206,51 @@ export class Emulator {
     }
 
     // setr - set new value for register
-    setr(n: number, v: number) {
+    setr(n: Register, v: number) {
         console.log("SETR, ", n, v)
         this.settable[n](v)
     }
 
     // getr - get register value
-    getr(n: number): number {
+    getr(n: Register): number {
         return this.gettable[n]()
     }
 
-    setrp(rp: number, h: number, l: number) {
+    setrp(rp: RegisterPair, h: number, l: number) {
         switch (rp) {
-            case 0b00:
+            case RegisterPair.B:
                 this.b = h
                 this.c = l
                 break
 
-            case 0b01:
+            case RegisterPair.D:
                 this.d = h
                 this.e = l
                 break
 
-            case 0b10:
+            case RegisterPair.H:
                 this.h = h
                 this.l = l
                 break
 
-            case 0b11:
+            case RegisterPair.PSW:
                 this.sp = to16(h, l)
                 break
         }
     }
 
-    getrp(rp: number) {
+    getrp(rp: RegisterPair) {
         switch (rp) {
-            case 0b00:
+            case RegisterPair.B:
                 return to16(this.b, this.c)
 
-            case 0b01:
+            case RegisterPair.D:
                 return to16(this.d, this.e)
 
-            case 0b10:
+            case RegisterPair.H:
                 return to16(this.h, this.l)
 
-            case 0b11:
+            case RegisterPair.PSW:
                 return this.sp
 
             default:
@@ -854,7 +855,7 @@ export class Emulator {
     //    of the register pair.
     // `Byte 2` of the inscruction is moved into the low-order register
     //    of the register pair.
-    lxi(rp: number) {
+    lxi(rp: RegisterPair) {
         this.setrp(rp, this.memory[this.pc + 2], this.memory[this.pc + 1])
         this.pc += 3
         this.cycles += 3
@@ -897,7 +898,7 @@ export class Emulator {
     // the succeeding address is moved to register `H`.
     lhld() {
         const addr = to16(this.memory[this.pc + 2], this.memory[this.pc + 1])
-        this.setrp(0, this.memory[addr], this.memory[addr + 1])
+        this.setrp(RegisterPair.H, this.memory[addr], this.memory[addr + 1])
         this.pc += 3
         this.cycles += 5
     }
@@ -925,7 +926,7 @@ export class Emulator {
     // the register pair `rp`, is moved to register `A`. Note:
     // only register pairs `rp=B` (registers B and C) or `rp=D`
     // (registers D and E) may be specified.
-    ldax(rp: number) {
+    ldax(rp: RegisterPair) {
         this.a = this.memory[this.getrp(rp)]
         this.pc += 1
         this.cycles += 2
@@ -939,7 +940,7 @@ export class Emulator {
     // whose address is in the register pair `rp`. Note:
     // only register pairs `rp=B` (registers B and C) or `rp=D`
     // (registers D and E) may be specified.
-    stax(rp: number) {
+    stax(rp: RegisterPair) {
         this.memory.splice(this.getrp(rp), 1, this.a)
         this.pc += 1
         this.cycles += 2
@@ -1007,7 +1008,7 @@ export class Emulator {
     //
     // The content of register `r` is added to the content of
     // the accemulator. The result is placed in accumulator.
-    add(r: number) {
+    add(r: Register) {
         this._add(this.getr(r))
         this.pc += 1
         this.cycles += 1
@@ -1046,7 +1047,7 @@ export class Emulator {
     // The content of register `r` and the content of the carry
     // bit are added to the content of the accumulator. The
     // result is placed in the accumulator.
-    adc(r: number) {
+    adc(r: Register) {
         this._add(this.getr(r), this.flagCY ? 1 : 0)
         this.pc += 1
         this.cycles += 1
@@ -1086,7 +1087,7 @@ export class Emulator {
     //
     // The content of register `r` is substructed from the content
     // of the accumulator. The result is placed in the accumulator.
-    sub(r: number) {
+    sub(r: Register) {
         this._sub(this.getr(r))
         this.pc += 1
         this.cycles += 1
@@ -1126,7 +1127,7 @@ export class Emulator {
     // The content of register `r` and the content of the
     // `C` flag are both substructed from the accumulator.
     // The result is placed in the accumulator.
-    sbb(r: number) {
+    sbb(r: Register) {
         this._sub(this.getr(r), this.flagCY ? 1 : 0)
         this.pc += 1
         this.cycles += 1
@@ -1165,7 +1166,7 @@ export class Emulator {
     //
     // The content of resiger r is incremented by one.
     // Note: All condition flags except `C` are affected.
-    inr(r: number) {
+    inr(r: Register) {
         const result = this.getr(r) + 1
 
         const index = ((this.a & 0x88) >> 1) | ((this.getr(r) & 0x88) >> 2) | ((result & 0x88) >> 3)
@@ -1208,7 +1209,7 @@ export class Emulator {
     //
     // the content of register `r` is recremented by one.
     // Note: All condition flags except `C` are affected.s
-    dcr(r: number) {
+    dcr(r: Register) {
         const result = this.getr(r) - 1
 
         const index = ((this.a & 0x88) >> 1) | ((this.getr(r) & 0x88) >> 2) | ((result & 0x88) >> 3)
@@ -1250,7 +1251,7 @@ export class Emulator {
     //
     // The content of the register pair `rp` is incremented by one.
     // Note: No condition flags are affected.
-    inx(rp: number) {
+    inx(rp: RegisterPair) {
         this.setrp(rp, ...from16(this.getrp(rp) + 1))
         this.pc += 1
         this.cycles += 1
@@ -1262,7 +1263,7 @@ export class Emulator {
     //
     // The content of the register pair `rp` is decremented by one.
     // Note: No condition flags are affected.
-    dcx(rp: number) {
+    dcx(rp: RegisterPair) {
         this.setrp(rp, ...from16(this.getrp(rp) - 1))
         this.pc += 1
         this.cycles += 1
@@ -1277,7 +1278,7 @@ export class Emulator {
     // register pair `H` and `L`. Note Only the `C` flag is affected.
     // It is set if there is a carry out of the double percision add,
     // otherwise it is reset.
-    dad(rp: number) {
+    dad(rp: RegisterPair) {
         const result = this.hl + this.getrp(rp)
 
         if (result & 0x10000) {
@@ -1332,7 +1333,7 @@ export class Emulator {
     // The content of register `r` is logically added with the content
     // of the accumulator. The result is placed in the accumulator.
     // The `C` flag is cleared.
-    ana(r: number) {
+    ana(r: Register) {
         this.a = this.a & this.getr(r)
         this.flags = upZSPC(this.flags, this.a)
         clrb(this.flags, Flags.Carry)
@@ -1380,7 +1381,7 @@ export class Emulator {
     // The content of register `r` is exclusive-or with the
     // content of the accumulator. The result is placed
     // in the accumulator. The `C` and `AC` flags are cleared.
-    xra(r: number) {
+    xra(r: Register) {
         this.a = this.a ^ this.getr(r)
         this.flags = upZSPC(this.flags, this.a)
         clrb(this.flags, Flags.Carry)
@@ -1431,7 +1432,7 @@ export class Emulator {
     // The content of register `r` is inclusive-or with the
     // content of the accumulator. The result is placed in
     // the accumulator. The `C` and `AC` flags are cleared.
-    ora(r: number) {
+    ora(r: Register) {
         this.a = this.a | this.getr(r)
         this.flags = upZSPC(this.flags, this.a)
         clrb(this.flags, Flags.Carry)
@@ -1484,7 +1485,7 @@ export class Emulator {
     //
     // The `Z` flag is set to ` if (A)=(r). The `C` flags is set
     // to 1 if (A)<(r)
-    cmp(r: number) {
+    cmp(r: Register) {
         let a = this.a
         this._sub(this.getr(r))
         this.a = a
@@ -1831,7 +1832,7 @@ export class Emulator {
     // memory location whose address is two less than the content
     // of register `SP`. The content of register `SP` is decremented by 2.
     // Note: Register pair `rp=SP` may not be specified.
-    push(rp: number) {
+    push(rp: RegisterPair) {
         this.memory.splice(this.sp - 2, 2, low(this.getrp(rp)), high(this.getrp(rp)))
         this.sp -= 2
         this.pc += 1
@@ -1866,7 +1867,7 @@ export class Emulator {
     // the high-order register of register pair `rp`. The
     // content of register `SP` is incremented by 2.
     // Note: Register pair `rp=SP` may not be specified.
-    pop(rp: number) {
+    pop(rp: RegisterPair) {
         this.setrp(rp, this.memory[this.sp], this.memory[this.sp + 1])
         this.sp += 2
         this.pc += 1
