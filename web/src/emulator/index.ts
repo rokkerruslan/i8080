@@ -1286,7 +1286,7 @@ export class Emulator {
         } else {
             clrb(this.flags, FlagsIndex.Carry)
         }
-
+        this.setrp(RegisterPair.H, high(result), low(result))
         this.pc += 1
         this.cycles += 3
     }
