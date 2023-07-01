@@ -53,7 +53,7 @@ const r = (inst: number): number => (inst & Mask.Rp) >> 4
 // upZSPC - update flags by current flags state and accumulator value
 function upZSPC(flags: number, a: number, isCarryAffected: boolean = true): number {
 
-    flags = setclrb(flags, FlagsIndex.Zero, a === 0)
+    flags = setclrb(flags, FlagsIndex.Zero, (a & 0xff) === 0)
 
     flags = setclrb(flags, FlagsIndex.Sign, a & 0x80)
 

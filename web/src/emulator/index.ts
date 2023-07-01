@@ -207,8 +207,7 @@ export class Emulator {
 
     // setr - set new value for register
     setr(n: Register, v: number) {
-        console.log("SETR, ", n, v)
-        this.settable[n](v)
+        this.settable[n](v & 0xff)
     }
 
     // getr - get register value
