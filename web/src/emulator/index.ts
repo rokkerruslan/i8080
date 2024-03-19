@@ -156,9 +156,37 @@ export class Emulator {
     // go - run emulation.
     go(frequency: number) {
         if (this.V) console.log("========= RUN ===========\nEMULATOR SPEED:", frequency)
+        const memoryAddresses = [
+            { address: 0x02B3, value: 0x3F }, // BASE address 02b3h
+            { address: 0x02B4, value: 0x06 }, 
+            { address: 0x02B5, value: 0x5B }, 
+            { address: 0x02B6, value: 0x4F }, 
+            { address: 0x02B7, value: 0x66 },
+            { address: 0x02B8, value: 0x6D },
+            { address: 0x02B9, value: 0x7D },
+            { address: 0x02BA, value: 0x07 },
+            { address: 0x02BB, value: 0x7F },
+            { address: 0x02BC, value: 0x6F },
+            { address: 0x02BD, value: 0x77 },
+            { address: 0x02BE, value: 0x5D },
+            { address: 0x02BF, value: 0x39 },
+            { address: 0x02C0, value: 0x5E },
+            { address: 0x02C1, value: 0x79 },
+            { address: 0x02C2, value: 0x71 },
+        ];          
 
-        this.continue(frequency)
-    }
+        for (const { address, value } of memoryAddresses) {
+            // Check if the memory address exists
+            if (address >= this.memory.length) {
+                console.error(`Memory address ${address.toString(16)} does not exist.`);
+                continue;
+                }
+            
+                this.memory[address] = value; // Add the value to the memory address
+        }
+
+            this.continue(frequency)
+        }
 
     // Already fetched instruction will be execute.
     stop() {
@@ -290,6 +318,8 @@ export class Emulator {
 
         let inst = this.memory[this.pc]
 
+        
+        
         if (this.V) console.log("EXECUTE:", ifmt(inst), "PC:", ifmt(this.pc, Format.Hex, 4))
 
         // ==== DECODER ==================================== //
