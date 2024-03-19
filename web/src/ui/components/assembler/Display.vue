@@ -1,6 +1,11 @@
 <template>
     <div>
         <div class="display">
+            
+            <Segment ref="segment1" :value="memory[0x83F8]"/>
+            <Segment ref="segment2" :value="memory[0x83F9]"/>
+            <Segment ref="segment3" :value="memory[0x83FA]"/>
+            <Segment ref="segment4" :value="memory[0x83FB]"/>
 
         </div>
         <section class="controls">
@@ -19,15 +24,6 @@
                        v-for="index in indexes">
             </fmt-input>
         </section>
-        <section class="memory-unit">
-            <fmt-input label="Address 2130H:"
-                       :format="format"
-                       :readonly="true"
-                       :bits="8"
-                       :zero="true"
-                       v-model="memory[0x2130]">
-            </fmt-input>
-        </section>
     </div>
 </template>
 
@@ -39,10 +35,11 @@
 
 
     import FmtInput from "./FmtInput.vue"
+    import Segment from "./DispSeg.vue"
 
     const defaultSize = 8
     @Component({
-        components: {FmtInput}
+        components: {FmtInput,Segment},
     })
     export default class Display extends Vue {
         format: Format = Format.Hex
@@ -66,8 +63,18 @@
         address(index: number){
             return ifmt(index,Format.Hex,4)
         }
-        
 
+
+        show() {
+            (this.$refs.segment1 as Segment).show();
+            (this.$refs.segment2 as Segment).show();
+            (this.$refs.segment3 as Segment).show();
+            (this.$refs.segment4 as Segment).show();
+
+        }
+        updated() {
+            this.show();
+        }
         
     }
 </script>
@@ -99,4 +106,4 @@
         background-color: #ef8f15;
         box-shadow: 0 0 3px rgb(85, 85, 85);
     }
-</style>
+</style>./DispSeg.vue
