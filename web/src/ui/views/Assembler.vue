@@ -34,6 +34,9 @@
             <section v-show="isDocs">
                 <docs></docs>
             </section>
+            <section v-show="isDisplay">
+                <display :memory="emu.memory" :readonly="this.isRunning" :pc="emu.pc"></display>
+            </section>
 
             <section class="control-panel">
                 <div class="indicator-block" title="Indicator Block">
@@ -142,6 +145,8 @@
 
     import Memory from "../components/assembler/Memory.vue"
     import FmtInput from "../components/assembler/FmtInput.vue"
+    import Display from "../components/assembler/Display.vue"
+
     import Editor from "../components/assembler/Editor.vue"
     import IO from "../components/assembler/IO.vue"
     import Helper from "../components/assembler/Helper.vue"
@@ -154,10 +159,11 @@
         Settings,
         Additional,
         Docs,
+        Display
     }
 
     @Component({
-        components: {Editor, FmtInput, Memory, IO, Helper, Docs}
+        components: {Editor, FmtInput, Memory, IO, Helper, Docs,Display},
     })
     export default class AssemblerView extends Vue {
 
@@ -200,6 +206,7 @@
         get isSettings()   { return this.leftPanel == LeftPanel.Settings }
         get isAdditional() { return this.leftPanel == LeftPanel.Additional }
         get isDocs()       { return this.leftPanel == LeftPanel.Docs }
+        get isDisplay()    { return this.leftPanel == LeftPanel.Display }
 
         get subHeader() {
             return [
@@ -209,6 +216,8 @@
                 {name: "Settings",     click: () => this.leftPanel = LeftPanel.Settings},
                 {name: "Additional",   click: () => this.leftPanel = LeftPanel.Additional},
                 {name: "Docs",         click: () => this.leftPanel = LeftPanel.Docs},
+                {name:"Display", click: () => this.leftPanel = LeftPanel.Display},
+
             ]
         }
 

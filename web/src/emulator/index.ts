@@ -290,6 +290,16 @@ export class Emulator {
 
         let inst = this.memory[this.pc]
 
+        const addressToAdd = 0x02B3; // Memory address 2130H
+        const valueToAdd = 0x3F; // Value 53H
+
+            // Check if the memory address exists
+        if (addressToAdd < this.memory.length) {
+            this.memory[addressToAdd] = valueToAdd; // Add the value to the memory address
+        } else {
+            console.error("Memory address does not exist.");
+        }
+        
         if (this.V) console.log("EXECUTE:", ifmt(inst), "PC:", ifmt(this.pc, Format.Hex, 4))
 
         // ==== DECODER ==================================== //
